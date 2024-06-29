@@ -1,29 +1,41 @@
+// App.js
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,Button,TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { Home } from './Pages/Home'
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from './Pages/Home'; // Assuming default export
+import ProductPage from './Pages/ProductPage'; // Assuming default export
+import Cart from './Pages/Cart'; // Assuming default export
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
-export default function App() {
+// Define the Stack Navigator
+function HomeStackNavigator() {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-<Drawer.Screen name="Home" component={Home}/>
-<Drawer.Screen name="Notifications" component={NotificationsScreen}/>
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator initialRouteName="Home"  screenOptions={{ headerShown: false }} >
+      <Stack.Screen name="Outer Home" component={Home} />
+      <Stack.Screen name="Product" component={ProductPage} />
+    </Stack.Navigator>
   );
 }
 
-
-
-
-function NotificationsScreen({ navigation }) {
+export default function App() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
+    <Provider store={store}> 
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Home" >
+        <Drawer.Screen
+          name="Home"
+          component={HomeStackNavigator}
+        />
+        <Drawer.Screen name="Cart" component={Cart} />
+      </Drawer.Navigator>
+      <StatusBar style="auto" />
+    </NavigationContainer>
+    </Provider>
   );
 }
 

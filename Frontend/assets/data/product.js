@@ -1,27 +1,27 @@
 import product1 from "../images/camera.jpg";
-import product2 from "../images/camera_lens.jpg";
-import product3 from "../images/watch.jpg";
+import product2 from "../images/camera_lens.png";
+import product3 from "../images/watch.png";
 
-export const Product = [
+export const products = [
   {
     id: "01",
     name: "Camera",
     description:"Description for Camera",
-    price:"399$",
+    price:"$399.00",
     img: product1,
   },
   {
     id: "02",
     name: "Camera Lens",
     description:"Description for Camera Lens",
-    price:"199$",
+    price:"$199.00",
     img: product2,
   },
   {
     id: "03",
     name: "Watch",
-    description:"Description for Watch",
-    price:"119$",
+    description:"Description for watch",
+    price:"$119.00",
     img: product3,
-  },
+  }
 ];
