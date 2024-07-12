@@ -40,7 +40,7 @@ export function ProductCart1({ product }) {
          </View>
      ) : (
          <View style={styles.box}>
-             <Text style={styles.price}>{product.price}</Text>
+             <Text style={styles.price}>${product.price.toFixed(2)}</Text>
              <AntDesign name="pluscircle" size={24} color="black" onPress={() => dispatch(addToCart({ ...product, quantity: 1 }))} />
          </View>
      )}

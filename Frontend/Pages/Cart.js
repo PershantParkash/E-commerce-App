@@ -2,10 +2,13 @@ import React from 'react';
 import { StyleSheet,FlatList, Text, View, SafeAreaView, TouchableOpacity,ScrollView } from 'react-native';
 import CartItem from '../Components/cartItem'; // Ensure the correct import path
  import { useSelector } from 'react-redux';
- 
+ import { selectProducts } from '../Slice/productsSlice';
 export function Cart() { 
+    // const productStore = useSelector((state) => state.cart.product);
     const product = useSelector((state) => state.cart.product);
-   const totalPrice = product.reduce((total, item) => {
+    // const product = useSelector(selectProducts);
+  
+    const totalPrice = product.reduce((total, item) => {
     if (item && item.quantity && item.price) {
         let itemTotal = item.quantity * item.price;
         return total + itemTotal;
@@ -16,7 +19,7 @@ export function Cart() {
 const shippingRate = 20;
 const subTotal = totalPrice + shippingRate;
 
-console.log(subTotal.toFixed(2)); 
+// console.log(subTotal.toFixed(2)); 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.Box1}>
@@ -25,7 +28,6 @@ console.log(subTotal.toFixed(2));
                 }
                   keyExtractor={(item) => {return item.id}}
                 />
-               {/* <CartItem product={product}/>  */}
             </View>
             <View style={styles.Box2}>
                 <View style={styles.row}>
@@ -34,12 +36,13 @@ console.log(subTotal.toFixed(2));
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.bold}>Shipping Rates: </Text>
-                    <Text>${shippingRate.toFixed(2)}</Text>
+                    {product.length >= 1 ? (<Text>${shippingRate.toFixed(2)}</Text>) : (<Text>$0.00</Text>) }   
                 </View>
                 <View style={styles.divider} />
                 <View style={styles.row}>
                     <Text style={styles.Totalbold}>Subtotal: </Text>
-                    <Text style={styles.Totalbold}>${subTotal.toFixed(2)}</Text>
+                    {product.length >= 1 ? (<Text style={styles.Totalbold}>  ${subTotal.toFixed(2)}</Text>): (<Text style={styles.Totalbold} >$0.00</Text>) }
+                    
                 </View>
                 <TouchableOpacity style={styles.button} onPress={() => alert('Button Pressed!')}>
                     <Text style={styles.buttonText}>Checkout</Text>

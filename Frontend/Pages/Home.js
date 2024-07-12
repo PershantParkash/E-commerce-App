@@ -1,74 +1,119 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, FlatList, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList, SafeAreaView,TouchableOpacity } from 'react-native';
 import { products } from '../assets/data/product';
 import { ProductCart1 } from '../Components/ProductCart1';
 import { ProductCart2 } from '../Components/ProductCart2';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
-export function Home() {
+import SearchItem from '../Components/SearchItem';
+import { useNavigation } from '@react-navigation/native';
+function Home() {
+  const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const productStore = useSelector((state) => state.cart.product);
+  const [productInCart, setProductInCart] = useState([]);
 
-  const changeHandler = (event) => {
-    setSearch(event.target.value)
-    const searchValue = event.target.value.toLowerCase();
-    const productInCart = productStore.filter(item => item.name.toLowerCase().startsWith(searchValue));
-    console.log(productInCart);
-  }
+  const changeHandler = (text) => {
+    setSearch(text);
+    const searchValue = text.toLowerCase();
+    const filteredProducts = productStore.filter(item => item.name && item.name.toLowerCase().startsWith(searchValue));
+    setProductInCart(filteredProducts);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-       <View >
-      <View style={styles.ContainerRow}>
-        <TextInput
-          style={styles.input}
-           placeholder="Type here.."
-           value={search}
-           onChange={changeHandler}
-        />
-
-<Ionicons name="cart-outline" style={styles.icon} size={36} color="black" />
-
-
+      <View>
+        <View style={styles.ContainerRow}>
+          <TextInput
+            style={styles.input}
+            placeholder="Type here.."
+            value={search}
+            onChangeText={changeHandler}
+          />
+         <View style={styles.container2}>
+      <View style={styles.cart}>
+        <Ionicons name="cart-outline" style={styles.icon} size={36} color="black" />
       </View>
-      </View>
-      <View style={styles.headingContainer}>
-        <Text style={styles.heading}>Explore</Text>
-      </View>
-      <View style={styles.CenterContainer}>
-        <FlatList
-          data={products}
-          renderItem={({ item }) => <ProductCart1 product={item} />}
-          keyExtractor={(item) => {return item.id}
-          }
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
-
-      <View style={styles.headingContainer}>
-        <Text style={styles.heading}>Best Selling</Text>
-      </View>
-
-      <View style={styles.CenterContainer}>
-     <FlatList 
-     data={products} 
-     renderItem={({item}) => <ProductCart2 product={item}/>}
-     keyExtractor={(item)=> {return item.id}}
-     horizontal
-     showsHorizontalScrollIndicator={false}
-     />
+      {productStore? (<TouchableOpacity style={styles.cart2} onPress={() => navigation.navigate('Cart')} >
+        <Text style={styles.quantity2}>{productStore.length}</Text>
+        </TouchableOpacity>): ("") }
+      
     </View>
+        </View>
+      </View>
 
+      {productInCart.length > 0 ? (
+        <FlatList
+          data={productInCart}
+          renderItem={({ item }) => <SearchItem product={item} />}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      ) : (
+        <View>
+          <View style={styles.headingContainer}>
+            <Text style={styles.heading}>Explore</Text>
+          </View>
+          <View style={styles.CenterContainer}>
+            <FlatList
+              data={products}
+              renderItem={({ item }) => <ProductCart1 product={item} />}
+              keyExtractor={(item) => item.id.toString()}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+
+          <View style={styles.headingContainer}>
+            <Text style={styles.heading}>Best Selling</Text>
+          </View>
+
+          <View style={styles.CenterContainer}>
+            <FlatList
+              data={products}
+              renderItem={({ item }) => <ProductCart2 product={item} />}
+              keyExtractor={(item) => item.id.toString()}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  icon:{
-marginLeft:10,
-marginTop:8,
-padding:6
-  },
+const styles = StyleSheet.create({container2: {
+  alignItems: 'center',
+  justifyContent: 'center',
+},
+cart: {
+  flexDirection: 'row',
+  borderRadius: 10,
+  marginLeft:4
+},cart2: {
+  height:22,
+  width:22,
+  backgroundColor:'red',
+  marginTop:-40,
+  alignItems: 'center',
+  justifyContent: 'center',
+  // color:'white'
+  borderRadius: 20,
+  marginRight:-20
+},
+icon: {
+  marginRight: 8,
+},
+quantity2: {
+  fontSize: 14,
+  fontWeight: 'bold',
+  color: 'white',
+},
+  // icon: {
+  //   marginLeft: 10,
+  //   marginTop: 8,
+  //   padding: 6
+  // },
   container: {
     flex: 1,
     backgroundColor: '#f0f0f0',
@@ -76,7 +121,6 @@ padding:6
   },
   CenterContainer: {
     marginTop: 10,
-
     alignItems: 'center',
   },
   box: {
@@ -85,14 +129,13 @@ padding:6
   },
   ContainerRow: {
     marginTop: 10,
-    // width:"90%",
     alignItems: 'center',
     flexDirection: 'row',
   },
   input: {
     marginTop: 10,
     fontSize: 18,
-    width: '100%',
+    flex: 1,
     padding: 10,
     backgroundColor: 'white',
     borderRadius: 5,
@@ -103,8 +146,7 @@ padding:6
     elevation: 1,
   },
   headingContainer: {
-    marginTop: 20,
-    // alignItems: 'center',
+    marginTop: 10,
   },
   heading: {
     fontWeight: 'bold',

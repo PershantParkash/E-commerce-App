@@ -35,7 +35,7 @@ export function ProductCart2({ product }) {
           </View>
         ) : (
           <View style={styles.box}>
-            <Text style={styles.price}>{product.price}</Text>
+            <Text style={styles.price}>${product.price.toFixed(2)}</Text>
             <AntDesign name="rightcircle" size={20} color="black" onPress={() => navigation.navigate('Product', { product })} />
           </View>
         )}

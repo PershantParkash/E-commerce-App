@@ -7,21 +7,21 @@ export const products = [
     id: "01",
     name: "Camera",
     description:"Description for Camera",
-    price:"$399.00",
+    price:399,
     img: product1,
   },
   {
     id: "02",
     name: "Camera Lens",
     description:"Description for Camera Lens",
-    price:"$199.00",
+    price:199,
     img: product2,
   },
   {
     id: "03",
     name: "Watch",
     description:"Description for watch",
-    price:"$119.00",
+    price:119,
     img: product3,
   }
 ];
