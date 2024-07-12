@@ -13,11 +13,11 @@ import { Ionicons } from '@expo/vector-icons';
 import MyProfile from './Pages/MyProfile';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
-
+import { useDispatch, useSelector } from 'react-redux';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
+const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 function HomeStackNavigator() {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
@@ -31,8 +31,11 @@ function DrawerNavigator() {
   return (
     <Drawer.Navigator initialRouteName="Home">
       <Drawer.Screen name="Home" component={HomeStackNavigator} />
+      {/* {isAuthenticated ?  */}
       <Drawer.Screen name="Login" component={Login} />
       <Drawer.Screen name="Register" component={Register} />
+    
+      
     </Drawer.Navigator>
   );
 }
