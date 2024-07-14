@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import product1 from '../assets/images/camera_lens.jpg';
-import product2 from '../assets/images/camera.jpg';
+import product2 from '../assets/images/camera_lens.jpg';
+import product1 from '../assets/images/camera.jpg';
 import product3 from '../assets/images/watch.png';
 
 const initialState = {
@@ -33,7 +33,6 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    // Add any reducers you might need in the future
   },
 });
 

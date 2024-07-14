@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, FlatList, SafeAreaView,TouchableOpacity } from 'react-native';
-import { products } from '../assets/data/product';
 import { ProductCart1 } from '../Components/ProductCart1';
 import { ProductCart2 } from '../Components/ProductCart2';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,12 +10,13 @@ function Home() {
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const productStore = useSelector((state) => state.cart.product);
+  const products = useSelector((state) => state.products.products);
   const [productInCart, setProductInCart] = useState([]);
 
   const changeHandler = (text) => {
     setSearch(text);
     const searchValue = text.toLowerCase();
-    const filteredProducts = productStore.filter(item => item.name && item.name.toLowerCase().startsWith(searchValue));
+    const filteredProducts = products.filter(item => item.name && item.name.toLowerCase().startsWith(searchValue));
     setProductInCart(filteredProducts);
   };
 
@@ -109,11 +109,6 @@ quantity2: {
   fontWeight: 'bold',
   color: 'white',
 },
-  // icon: {
-  //   marginLeft: 10,
-  //   marginTop: 8,
-  //   padding: 6
-  // },
   container: {
     flex: 1,
     backgroundColor: '#f0f0f0',

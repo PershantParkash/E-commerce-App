@@ -3,22 +3,22 @@ import product1 from "../assets/images/camera.jpg";
 import product2 from "../assets/images/camera_lens.png";
 const initialState = {
     product: [
-        {
-            id: "01",
-            name: "Camera",
-            description: "Description for Camera",
-            price: 399,
-            img: product1,
-            quantity: 1
-         },
-        {
-            id: "02",
-            name: "Camera Lens",
-            description: "Description for Camera Lens",
-            price: 199,
-            img: product2,
-            quantity: 1
-        }
+        // {
+        //     id: "01",
+        //     name: "Camera",
+        //     description: "Description for Camera",
+        //     price: 399,
+        //     img: product1,
+        //     quantity: 1
+        //  },
+        // {
+        //     id: "02",
+        //     name: "Camera Lens",
+        //     description: "Description for Camera Lens",
+        //     price: 199,
+        //     img: product2,
+        //     quantity: 1
+        // }
     ],
 };
 

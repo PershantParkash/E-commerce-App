@@ -17,28 +17,36 @@ import { useDispatch, useSelector } from 'react-redux';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+// 
+
+
+
+
 function HomeStackNavigator() {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Product" component={ProductPage} options={{ headerShown: false }}/>
+      <Stack.Screen name="Product" component={ProductPage} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
 
 function DrawerNavigator() {
-  return (
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  return isAuthenticated ? (
     <Drawer.Navigator initialRouteName="Home">
       <Drawer.Screen name="Home" component={HomeStackNavigator} />
-      {/* {isAuthenticated ?  */}
-      <Drawer.Screen name="Login" component={Login} />
-      <Drawer.Screen name="Register" component={Register} />
-    
-      
     </Drawer.Navigator>
+  ) : (
+    <Drawer.Navigator initialRouteName="Home">
+       <Drawer.Screen name="Home" component={HomeStackNavigator} />
+       <Drawer.Screen name="Login" component={Login} />
+       <Drawer.Screen name="Register" component={Register} />
+      </Drawer.Navigator>
   );
 }
+
+
 
 export default function App() {
   return (
@@ -68,9 +76,9 @@ export default function App() {
               backgroundColor: 'white',
             },
           })}
-        > 
-        <Tab.Screen name="Home" component={DrawerNavigator} />
-          <Tab.Screen name="Cart" component={Cart} options={{ headerShown: true}}/>
+        >
+          <Tab.Screen name="Home" component={DrawerNavigator} />
+          <Tab.Screen name="Cart" component={Cart} options={{ headerShown: true }} />
           <Tab.Screen name="Profile" component={MyProfile} />
         </Tab.Navigator>
       </NavigationContainer>

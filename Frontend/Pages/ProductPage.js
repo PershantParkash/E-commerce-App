@@ -38,7 +38,7 @@ export function ProductPage() {
 
         </View>
         <View style={styles.detailsContainer}>
-          <Text style={styles.price}>{product.price}</Text>
+          <Text style={styles.price}>{product.price.toFixed(2)}</Text>
           <Text style={styles.name}>{product.name}</Text>
           <Text style={styles.heading}>Description:</Text>
           <Text style={styles.description}>{product.description}</Text>
@@ -69,11 +69,7 @@ export function ProductPage() {
 const styles = StyleSheet.create({
   cart: {
     flexDirection: 'row',
-    // alignItems: 'center',
-    // padding: 10,
-    // backgroundColor: '#f5f5f5',
     borderRadius: 10,
-    // marginLeft:4
   },
   row: {
     position: 'absolute',
@@ -100,9 +96,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
   },
-  // icon: {
-  //   marginRight: 8,
-  // },
   quantity2: {
     fontSize: 14,
     fontWeight: 'bold',
@@ -127,11 +120,7 @@ const styles = StyleSheet.create({
     height: 22,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: '#6A5ACD',
     borderRadius: 10,
-    // marginLeft: 8,
-    // marginRight: 8,  
-
   },
   quantityText: {
     fontSize: 24,
